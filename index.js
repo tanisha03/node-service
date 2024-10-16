@@ -16,7 +16,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', async (req, res) => {
-  res.status(200).json({ success: true, data: 'Up & Working' });
+  res.status(200).json('Up & Working');
 });
 
 // Your get-interaction endpoint
