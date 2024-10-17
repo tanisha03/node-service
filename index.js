@@ -44,7 +44,11 @@ app.get('/api/get-interaction', async (req, res) => {
       const start = new Date(start_date);
       const end = new Date(end_date);
       return currentDate >= start && start <= end;
-    }).map(offer => offer.config);
+    }).map(offer => ({
+        id: offer.id,
+        ...offer.config
+      })
+    );
 
     res.status(200).json({ success: true, data: filteredOffers });
   } catch (error) {
