@@ -9,4 +9,11 @@ const getAllOffers = async () => {
   return await supabase.from('offers').select();
 };
 
-module.exports = { getAllOffers };
+const incrementField = async (offerId, field) => {
+  return await supabase
+    .from('offers')
+    .update({ [field]: supabase.raw(`"${field}" + 1`) })
+    .eq('id', offerId);
+};
+
+module.exports = { getAllOffers, incrementField };

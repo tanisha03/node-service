@@ -57,6 +57,38 @@ app.get('/api/get-interaction', async (req, res) => {
   }
 });
 
+app.get('/api/increment-click', async (req, res) => {
+  try {
+    const { id } = req.body;
+    const { incrementField } = require('./utils/supabaseHelpers');
+
+    const { data, error } = await incrementField(id, 'clicks');
+    if (error) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+    res.status(200).json({ success: true});
+  } catch (error) {
+    console.error('Error fetching interactions:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+app.get('/api/increment-impressions', async (req, res) => {
+  try {
+    const { id } = req.body;
+    const { incrementField } = require('./utils/supabaseHelpers');
+
+    const { data, error } = await incrementField(id, 'impressions');
+    if (error) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+    res.status(200).json({ success: true});
+  } catch (error) {
+    console.error('Error fetching interactions:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
