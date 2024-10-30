@@ -46,6 +46,7 @@ app.get('/api/get-interaction', async (req, res) => {
       return currentDate >= start && start <= end;
     }).map(offer => ({
         id: offer.id,
+        format: offer.offer_format,
         ...offer.config
       })
     );
@@ -75,7 +76,6 @@ app.post('/api/increment-click', async (req, res) => {
 
 app.post('/api/increment-impressions', async (req, res) => {
   try {
-    console.log('----',req);
     const { id } = req.body;
     const { incrementField } = require('./utils/supabaseHelpers');
 
