@@ -57,7 +57,7 @@ app.get('/api/get-interaction', async (req, res) => {
   }
 });
 
-app.get('/api/increment-click', async (req, res) => {
+app.post('/api/increment-click', async (req, res) => {
   try {
     const { id } = req.body;
     const { incrementField } = require('./utils/supabaseHelpers');
@@ -73,8 +73,9 @@ app.get('/api/increment-click', async (req, res) => {
   }
 });
 
-app.get('/api/increment-impressions', async (req, res) => {
+app.post('/api/increment-impressions', async (req, res) => {
   try {
+    console.log('----',req);
     const { id } = req.body;
     const { incrementField } = require('./utils/supabaseHelpers');
 
