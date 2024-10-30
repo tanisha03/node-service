@@ -10,18 +10,6 @@ const getAllOffers = async () => {
 };
 
 const incrementField = async (offerId, field) => {
-  // return await supabase
-  //   .from('offers')
-  //   .update({ [field]: supabase.raw(`"${field}" + 1`) })
-  //   .eq('id', offerId);
-
-  //  return await supabase
-  // .from('offers')
-  // .update({ [field]: 1 })
-  // .increment('field')
-  // .match({ id: offerId });
-
-
   const { data: currentData, error: fetchError } = await supabase
     .from('offers')
     .select(field)
