@@ -32,6 +32,8 @@ const io = new Server(server, {
   },
 });
 
+console.log(io);
+
 // Socket.IO event handling
 io.on('connection', (socket) => {
   console.log('A user connected', socket.id);
@@ -62,6 +64,8 @@ io.on('connection', (socket) => {
     console.log('User disconnected', socket.id);
   });
 });
+
+// io.on('e')
 
 // API Routes
 app.get('/', async (req, res) => {
