@@ -25,7 +25,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
   path: '/api/socket', // Path must match the client-side WebSocket connection
   cors: {
-    origin: '*', // Allow all origins
+    origin: 'https://saas-dashboard-henna.vercel.app',  // Allow only your frontend domain
+    // origin: '*', // Allow all origins
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
     credentials: true,
