@@ -32,4 +32,28 @@ const incrementField = async (offerId, field) => {
 
 };
 
-module.exports = { getAllOffers, incrementField };
+const addActivity = async (leadId, value) => {
+  const { data: currentData, error: fetchError } = await supabase
+    .from('leads')
+    .eq('id', leadId)
+
+  if (fetchError) {
+    return { error: fetchError };
+  }
+
+  // Increment the field value
+  const currentValue = currentData.activity;
+  var newValue = [
+    ...currentValue || [],
+    ...value
+  ];
+
+  // Update the field with the new value
+  return await supabase
+    .from('leads')
+    .update({ activity: JSON.stringify({data: newValue}) })
+    .eq('id', leadId);
+
+};
+
+module.exports = { getAllOffers, incrementField, addActivity };

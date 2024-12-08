@@ -142,6 +142,22 @@ app.post('/api/increment-impressions', async (req, res) => {
   }
 });
 
+app.post('/api/add-activity', async (req, res) => {
+  try {
+    const { id, activity } = req.body;
+    const { addActivity } = require('./utils/supabaseHelpers');
+
+    const { data, error } = await addActivity(id, activity);
+    if (error) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('Error adding activity:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
 // Start the server and listen on the specified port
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
