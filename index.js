@@ -145,6 +145,7 @@ app.post('/api/increment-impressions', async (req, res) => {
 app.post('/api/add-activity', async (req, res) => {
   try {
     const { id, activity } = req.body;
+    console.log('~~~~iid', id);
     const { addActivity } = require('./utils/supabaseHelpers');
 
     const { data, error } = await addActivity(id, activity);

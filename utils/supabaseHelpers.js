@@ -33,19 +33,20 @@ const incrementField = async (offerId, field) => {
 };
 
 const addActivity = async (leadId, value) => {
-  const { data: currentData, error: fetchError } = await supabase
+  const { data, error } = await supabase
     .from('leads')
+    .select()
     .eq('id', leadId)
 
-  if (fetchError) {
-    return { error: fetchError };
+  if (error) {
+    return { error };
   }
 
   // Increment the field value
-  const currentValue = currentData.activity;
+  const currentValue = data && data[0]?.activity && JSON.parse(data[0].activity)?.data;
   var newValue = [
     ...currentValue || [],
-    ...value
+    value
   ];
 
   // Update the field with the new value
