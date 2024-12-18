@@ -76,6 +76,7 @@ app.get('/', async (req, res) => {
 // Your get-interaction endpoint
 app.get('/api/get-interaction', async (req, res) => {
   try {
+    const { id } = req.query;
     const { getAllOffers } = require('./utils/supabaseHelpers');
 
     const { data, error } = await getAllOffers();
@@ -97,6 +98,16 @@ app.get('/api/get-interaction', async (req, res) => {
       const start = new Date(start_date);
       const end = new Date(end_date);
       return currentDate >= start && currentDate <= end;
+    }).filter((offer) => {
+      if(offer?.lead_list){
+        if(offer?.lead_list?.[0] === 'all') {
+          if(id) return true;
+          else return false;
+        } else {
+          return offer?.lead_list?.includes(id);
+        }
+      }
+      return true;
     }).map((offer) => ({
       id: offer.id,
       format: offer.offer_format,
@@ -145,7 +156,6 @@ app.post('/api/increment-impressions', async (req, res) => {
 app.post('/api/add-activity', async (req, res) => {
   try {
     const { id, activity } = req.body;
-    console.log('~~~~iid', id);
     const { addActivity } = require('./utils/supabaseHelpers');
 
     const { data, error } = await addActivity(id, activity);
