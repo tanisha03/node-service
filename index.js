@@ -99,7 +99,7 @@ app.get('/api/get-interaction', async (req, res) => {
       const end = new Date(end_date);
       return currentDate >= start && currentDate <= end;
     }).filter((offer) => {
-      if(offer?.lead_list){
+      if(offer?.lead_list?.length){
         if(offer?.lead_list?.[0] === 'all') {
           if(id) return true;
           else return false;
