@@ -85,8 +85,8 @@ app.get('/api/get-interaction', async (req, res) => {
       return res.status(500).json({ success: false, message: error.message });
     }
 
-    const {data, error} = await getLeadDetails(id);
-    if(!data.length || error){
+    const {dataLead, errorLead} = await getLeadDetails(id);
+    if(!dataLead.length || errorLead){
       isRegistered = false;
     }
 
