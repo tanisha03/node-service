@@ -9,6 +9,10 @@ const getAllOffers = async () => {
   return await supabase.from('offers').select();
 };
 
+const getLeadDetails = async (id) => {
+  return await supabase.from('leads').select().eq('id', leadId);
+};
+
 const incrementField = async (offerId, field) => {
   const { data: currentData, error: fetchError } = await supabase
     .from('offers')

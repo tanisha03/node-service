@@ -77,11 +77,17 @@ app.get('/', async (req, res) => {
 app.get('/api/get-interaction', async (req, res) => {
   try {
     const { id } = req.query;
+    let isRegistered = true;
     const { getAllOffers } = require('./utils/supabaseHelpers');
 
     const { data, error } = await getAllOffers();
     if (error) {
       return res.status(500).json({ success: false, message: error.message });
+    }
+
+    const {data, error} = await getLeadDetails(id);
+    if(!data.length || error){
+      isRegistered = false;
     }
 
     // Filter with data
@@ -101,8 +107,8 @@ app.get('/api/get-interaction', async (req, res) => {
     }).filter((offer) => {
       if(offer?.lead_list?.length){
         if(offer?.lead_list?.[0] === 'all') {
-          if(id) return true;
-          else return false;
+          if(offer?.format === 'leadGen' && isRegistered) return false;
+          else return true;
         } else {
           return offer?.lead_list?.includes(id);
         }
